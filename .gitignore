@@ -1,0 +1,7 @@
+.env
+.venv/
+csv/
+csv2/
+clean/
+test/
+__pycache__/
