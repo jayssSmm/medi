@@ -14,19 +14,10 @@ def encode_image(image_path):
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-image_path = "ocr2.jpg"
+image_path = "test/ocr2.jpg"
 base64_image = encode_image(image_path)
 
-prompt = """You are analyzing a photo of a handwritten doctor's prescription.
-Extract every medicine mentioned. For each one, return:
-- "raw_text": exactly what you see written
-- "best_guess_name": your best guess at the actual medicine name
-- "confidence": "high", "medium", or "low"
-- "dosage_instructions": if legible, else null
-- "alternative_guesses": up to 2 other plausible medicine names it could be
-
-If you cannot confidently read something, say so — do NOT invent a plausible-sounding drug name.
-Return ONLY a JSON object with a key "medicines" containing a list of these objects."""
+prompt = os.getenv("prompt")
 
 completion = client.chat.completions.create(
     model="qwen/qwen3.6-27b",
@@ -46,7 +37,7 @@ completion = client.chat.completions.create(
     temperature=0.7,           # Groq's recommended non-thinking-mode value
     top_p=0.80,
     presence_penalty=1.5,      # Groq's recommended non-thinking-mode value — much stronger than before
-    max_completion_tokens=2048,
+    max_completion_tokens=1000,
     response_format={"type": "json_object"}
 )
 

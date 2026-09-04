@@ -5,3 +5,4 @@ csv2/
 clean/
 test/
 __pycache__/
+prompt.txt
