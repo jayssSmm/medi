@@ -1,6 +1,5 @@
-from langgraph.graph import StateGraph
 from langgraph.graph.message import add_messages
-from typing import Annotated
+from typing import Annotated, TypedDict
 
-class State(StateGraph):
-    message: Annotated[list, add_messages]
+class State(TypedDict):
+    mess: Annotated[list, add_messages]
