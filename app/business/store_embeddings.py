@@ -6,7 +6,6 @@ embeddings into qdrant
 from langchain_huggingface import HuggingFaceEmbeddings
 import pandas as pd
 from langchain_community.document_loaders import DataFrameLoader
-from langchain_core.documents import Document
 from qdrant_client import QdrantClient
 import torch
 from dotenv import load_dotenv
