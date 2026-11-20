@@ -37,7 +37,7 @@ def get_graph():
     graph_builder.add_edge("tools", "agent")
 
     graph_builder.add_conditional_edges(
-        "agent", agent, {"tools": "tools", END: END}
+        "agent", route, {"tools": "tools", END: END}
     )
 
     return graph_builder.compile()
