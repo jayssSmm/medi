@@ -15,10 +15,9 @@ from langgraph.prebuilt import ToolNode
 
 from langchain_core.messages import SystemMessage
 
-SYSTEM = (
+SYSTEM = SystemMessage(
     # TODO
 )
-
 
 @tool("web_search_tool")
 def search_tool(query: str) -> str:
