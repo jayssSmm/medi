@@ -9,13 +9,21 @@ from qdrant_client import QdrantClient
 from langchain_qdrant import QdrantVectorStore
 from langchain_core.tools.retriever import create_retriever_tool
 from langchain_community.tools import DuckDuckGoSearchResults
+from langchain_community.utilities import DuckDuckGoSearchAPIWrapper
 from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode
+
+from langchain_core.messages import SystemMessage
+
+SYSTEM = (
+    # TODO
+)
 
 
 @tool("web_search_tool")
 def search_tool(query: str) -> str:
     """Search the web with DuckDuckGo and return the top results."""
+    wrapper = DuckDuckGoSearchAPIWrapper(region="us-en", max_results=5)
     search = DuckDuckGoSearchResults(max_results=3, output_format="list")
     results = search.invoke(query)
     return "\n\n".join(

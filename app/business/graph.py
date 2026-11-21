@@ -5,7 +5,7 @@ from langgraph.graph import END, START, StateGraph
 from functools import lru_cache
 
 tools = get_tools()
-llm = ChatGroq(model="qwen/qwen3.8-27b")
+llm = ChatGroq(model="openai/gpt-oss-120b")
 
 llm_with_tools = llm.bind_tools(tools)
 
