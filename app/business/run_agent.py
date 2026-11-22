@@ -22,12 +22,12 @@ def print_trace(messages):
 
 def ask(graph, medicines: list[dict], debug: bool = False) -> str:
     payload = json.dumps(
-        [{"name": m["name"], "strength": m["strength"], "form": m["form"]} for m in medicines],
+        [{"name": m.name, "strength": m.strength, "form": m.form} for m in medicines],
         ensure_ascii=False,
     )
     try:
         result = graph.invoke(
-            {"messages": [
+            {"mess": [
                 ("system", GENERIC_AGENT_PROMPT),
                 ("user", payload),
             ]},

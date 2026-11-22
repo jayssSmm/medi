@@ -13,11 +13,7 @@ from langchain_community.utilities import DuckDuckGoSearchAPIWrapper
 from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode
 
-from langchain_core.messages import SystemMessage
 
-SYSTEM = SystemMessage(
-    # TODO
-)
 
 @tool("web_search_tool")
 def search_tool(query: str) -> str:
@@ -74,4 +70,4 @@ def get_tools():
 
 
 def tool_node():
-    return ToolNode(get_tools())
+    return ToolNode(get_tools(), messages_key="mess")
