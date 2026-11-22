@@ -40,7 +40,6 @@ def _prepare_image(data: bytes) -> bytes:
             return buf.getvalue()
     raise ValueError("Image could not be compressed enough")
 
-
 @router.post("/analyze-prescription", response_model=PrescriptionResponse)
 async def analyze_prescription(file: UploadFile = File(...)):
     if file.content_type not in ALLOWED_TYPES:
