@@ -4,6 +4,7 @@ import json
 
 from app.system_prompts.generic_prompt import GENERIC_AGENT_PROMPT
 
+from app.base_model.generic import GenericLookup
 
 def print_trace(messages):
     """Print every message in the finished state, in order."""
@@ -20,7 +21,7 @@ def print_trace(messages):
             print(f"     preview: {m.content[:200]!r}")
 
 
-def ask(graph, medicines: list[dict], debug: bool = False) -> str:
+def ask(graph, medicines: list[dict], debug: bool = False) -> GenericLookup:
     payload = json.dumps(
         [{"name": m.name, "strength": m.strength, "form": m.form} for m in medicines],
         ensure_ascii=False,
@@ -37,9 +38,11 @@ def ask(graph, medicines: list[dict], debug: bool = False) -> str:
         return "Agent hit the step limit (probably looping on tool calls)."
 
     if debug:
-        print_trace(result["messages"])
+        print_trace(result["mess"])
 
-    return result["messages"][-1].content
+    final_message = result["mess"][-1]
+    content = final_message.content  # assumes the final message is an AI message with JSON text
+    return GenericLookup.model_validate_json(content)
 
 
 if __name__ == "__main__":

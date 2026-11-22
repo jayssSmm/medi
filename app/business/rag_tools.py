@@ -70,4 +70,4 @@ def get_tools():
 
 
 def tool_node():
-    return ToolNode(get_tools(), messages_key="mess")
+    return ToolNode(get_tools(), messages_key="mess", handle_tool_errors=True)
