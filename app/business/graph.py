@@ -1,15 +1,15 @@
-from rag_tools import get_tools, tool_node
+
+from app.business.rag_tools import *
 from langchain_groq import ChatGroq
 from app.state import State
 from langgraph.graph import END, START, StateGraph
 from functools import lru_cache
 
-tools = get_tools()
 llm = ChatGroq(model="openai/gpt-oss-120b")
-
-llm_with_tools = llm.bind_tools(tools)
+tools = get_tools()
 
 def agent(state: State):
+    llm_with_tools = llm.bind_tools(tools)
     return {"mess": [llm_with_tools.invoke(state['mess'])]}
 
 def route(state: State):
@@ -27,7 +27,7 @@ def route(state: State):
 
     
 @lru_cache(maxsize=1)
-def get_graph():
+def get_graph(tool_node):
     graph_builder = StateGraph(State)
 
     graph_builder.add_node("tools", tool_node())
