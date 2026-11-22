@@ -2,3 +2,5 @@
 .venv/
 node_modules/
 dataset/
+prescriptions/
+__pycache__/
