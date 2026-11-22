@@ -1,5 +1,8 @@
 from langchain_core.messages import HumanMessage, AIMessage, ToolMessage
 from langgraph.errors import GraphRecursionError
+import json
+
+from app.system_prompts.generic_prompt import GENERIC_AGENT_PROMPT
 
 
 def print_trace(messages):
@@ -17,11 +20,18 @@ def print_trace(messages):
             print(f"     preview: {m.content[:200]!r}")
 
 
-def ask(graph, user_input: str, debug: bool = False) -> str:
+def ask(graph, medicines: list[dict], debug: bool = False) -> str:
+    payload = json.dumps(
+        [{"name": m["name"], "strength": m["strength"], "form": m["form"]} for m in medicines],
+        ensure_ascii=False,
+    )
     try:
         result = graph.invoke(
-            {"messages": [("user", user_input)]},
-            {"recursion_limit": 15},  # stops runaway agent <-> tools loops
+            {"messages": [
+                ("system", GENERIC_AGENT_PROMPT),
+                ("user", payload),
+            ]},
+            {"recursion_limit": 10 + 5 * len(medicines)},
         )
     except GraphRecursionError:
         return "Agent hit the step limit (probably looping on tool calls)."

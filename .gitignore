@@ -4,3 +4,4 @@ node_modules/
 dataset/
 prescriptions/
 __pycache__/
+plans/
